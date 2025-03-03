@@ -1,10 +1,10 @@
 import { useState, useEffect, useMemo } from "react";
 import { Condo } from "@/app/api/types";
-import { condoApi } from "@/app/api/treasury/route";
 import PriceDisplay from "./PriceDisplay";
 import OptionsDropdown from "./OptionsDropdown";
 import SearchBar from "./SearchBar";
 import { useDebounce } from "@/app/utils/useDebounce";
+import { condoApi } from "@/lib/api";
 
 function TreasuryContent() {
   const [data, setData] = useState<Condo[]>([]);
