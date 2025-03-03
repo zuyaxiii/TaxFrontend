@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { Condo } from '../types';
 
-const API_URL = 'http://localhost:4000';
+const API_URL = 'https://taxbackend-production-b1dc.up.railway.app';
 
 const api = axios.create({
   baseURL: API_URL,
