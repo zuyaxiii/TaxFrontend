@@ -83,7 +83,7 @@ const TaxResultsDisplay: React.FC<TaxResultsDisplayProps> = ({
 
   return (
     <>
-      <div className="mt-8 p-6 border rounded-lg bg-white rounded-xl shadow-lg">
+      <div className="mt-8 p-6 border bg-white rounded-xl shadow-lg">
         <div className="mb-4">
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-xl font-semibold">ผลการคำนวณ</h2>

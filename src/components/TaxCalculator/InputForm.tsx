@@ -189,7 +189,7 @@ const InputForm: React.FC<InputFormProps> = ({ values, setValues }) => {
 
             <div>
               <label htmlFor="purchaseDate" className="block mb-1">
-                วันที่ผู้ขายเริ่มถือครองคอนโด
+                วันที่ผู้ขายเริ่มถือครอง
                 <span className="text-red-500">*</span>
               </label>
               <input
