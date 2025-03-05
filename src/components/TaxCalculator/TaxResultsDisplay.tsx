@@ -12,12 +12,14 @@ interface TaxResultsDisplayProps {
   results: TaxResults | null;
   paymentShares: PaymentShares;
   detailedPeriod?: DetailedPeriod;
+  sellerType: "individual" | "corporate";
 }
 
 const TaxResultsDisplay: React.FC<TaxResultsDisplayProps> = ({
   results,
   paymentShares,
   detailedPeriod,
+  sellerType,
 }) => {
   if (!results) return null;
 
@@ -65,8 +67,8 @@ const TaxResultsDisplay: React.FC<TaxResultsDisplayProps> = ({
     paymentShares.withholdingTax
   );
   const mortgageFeeShares = {
-    buyer: results.mortgageFee,  
-    seller: 0                
+    buyer: results.mortgageFee,
+    seller: 0,
   };
   const buyerTotal =
     transferFeeShares.buyer +
@@ -88,6 +90,13 @@ const TaxResultsDisplay: React.FC<TaxResultsDisplayProps> = ({
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-xl font-semibold">ผลการคำนวณ</h2>
             <Image src={YoknewLogo} alt="ผลการคำนวณ" width={100} height={100} />
+          </div>
+
+          <div className="mb-2">
+            <p className="font-prompt">
+              <span className="font-medium">ประเภทผู้ขาย:</span>{" "}
+              {sellerType === "individual" ? "บุคคลธรรมดา" : "นิติบุคคล"}
+            </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -149,7 +158,10 @@ const TaxResultsDisplay: React.FC<TaxResultsDisplayProps> = ({
                   seller: stampDutyShares.seller,
                 },
                 {
-                  label: "ภาษีเงินได้บุคคลธรรมดาของผู้ขาย (หัก ณ ที่จ่าย)",
+                  label:
+                    sellerType === "individual"
+                      ? "ภาษีเงินได้บุคคลธรรมดาของผู้ขาย (หัก ณ ที่จ่าย)"
+                      : "ภาษีเงินได้ของผู้ขาย (หัก ณ ที่จ่าย)",
                   value: results.withholdingTax,
                   buyer: withholdingTaxShares.buyer,
                   seller: withholdingTaxShares.seller,
@@ -358,7 +370,9 @@ const TaxResultsDisplay: React.FC<TaxResultsDisplayProps> = ({
             </tr>
             <tr>
               <td className="p-2 border-b">
-                ภาษีเงินได้บุคคลธรรมดาของผู้ขาย (หัก ณ ที่จ่าย)
+                {sellerType === "individual"
+                  ? "ภาษีเงินได้บุคคลธรรมดาของผู้ขาย (หัก ณ ที่จ่าย)"
+                  : "ภาษีเงินได้ของผู้ขาย (หัก ณ ที่จ่าย)"}
               </td>
               <td className="p-2 border-b text-right">
                 {formatCurrency(withholdingTaxShares.buyer)}
@@ -490,7 +504,9 @@ const TaxResultsDisplay: React.FC<TaxResultsDisplayProps> = ({
             </tr>
             <tr>
               <td className="p-2 border-b">
-                ภาษีเงินได้บุคคลธรรมดาของผู้ขาย (หัก ณ ที่จ่าย)
+                {sellerType === "individual"
+                  ? "ภาษีเงินได้บุคคลธรรมดาของผู้ขาย (หัก ณ ที่จ่าย)"
+                  : "ภาษีเงินได้ของผู้ขาย (หัก ณ ที่จ่าย)"}
               </td>
               <td className="p-2 border-b text-right">
                 {formatCurrency(withholdingTaxShares.seller)}
@@ -630,7 +646,9 @@ const TaxResultsDisplay: React.FC<TaxResultsDisplayProps> = ({
             </tr>
             <tr>
               <td className="p-2 border-b">
-                ภาษีเงินได้บุคคลธรรมดาของผู้ขาย (หัก ณ ที่จ่าย)
+                {sellerType === "individual"
+                  ? "ภาษีเงินได้บุคคลธรรมดาของผู้ขาย (หัก ณ ที่จ่าย)"
+                  : "ภาษีเงินได้ของผู้ขาย (หัก ณ ที่จ่าย)"}
               </td>
               <td className="p-2 border-b text-right">
                 {formatCurrency(withholdingTaxShares.buyer)}

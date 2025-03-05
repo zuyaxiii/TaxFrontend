@@ -65,6 +65,10 @@ const CondoTaxCalculator: React.FC = () => {
     }));
   };
 
+  const [sellerType, setSellerType] = useState<"individual" | "corporate">(
+    "individual"
+  );
+
   useEffect(() => {
     if (values.purchaseDate && values.saleDate) {
       setHoldingPeriod(
@@ -103,6 +107,8 @@ const CondoTaxCalculator: React.FC = () => {
       ? parseFloat(customFees.mortgageFee) / 100 || 0
       : 0.01;
 
+    const isCorporate = sellerType === "corporate";
+
     const calculatedResults = calculateTaxResults(
       salePrice,
       assessedPrice,
@@ -112,17 +118,54 @@ const CondoTaxCalculator: React.FC = () => {
       values.isRegisteredOverOneYear,
       registrationPeriod,
       transferFeeRate,
-      mortgageFeeRate
+      mortgageFeeRate,
+      isCorporate
     );
 
     setResults(calculatedResults);
+  };
+
+  const renderSellerTypeSelection = () => {
+    return (
+      <div className="mb-4">
+        <label className="block text-gray-700 text-sm font-bold mb-2">
+          ประเภทผู้ขาย
+        </label>
+        <div className="flex items-center">
+          <div className="mr-4">
+            <input
+              type="radio"
+              id="individual"
+              name="sellerType"
+              value="individual"
+              checked={sellerType === "individual"}
+              onChange={() => setSellerType("individual")}
+              className="mr-2"
+            />
+            <label htmlFor="individual">บุคคลธรรมดา</label>
+          </div>
+          <div>
+            <input
+              type="radio"
+              id="corporate"
+              name="sellerType"
+              value="corporate"
+              checked={sellerType === "corporate"}
+              onChange={() => setSellerType("corporate")}
+              className="mr-2"
+            />
+            <label htmlFor="corporate">นิติบุคคล</label>
+          </div>
+        </div>
+      </div>
+    );
   };
 
   return (
     <>
       <div className="max-w-4xl mx-auto pt-6 pr-6">
         <div className="flex justify-end ml-10">
-          <Image src={YoknewLogo} alt="ผลการคำนวณ" width={150} height={150} />
+          <Image src={YoknewLogo} alt="Logo" width={150} height={150} />
         </div>
       </div>
       <div className="max-w-4xl mx-auto p-6">
@@ -131,8 +174,48 @@ const CondoTaxCalculator: React.FC = () => {
           และค่าธรรมเนียมอื่นๆ ที่จะต้องชำระ ณ สำนักงานที่ดิน
         </h1>
 
+        <div className="mb-4 p-4 bg-white w-full rounded-xl shadow-lg">
+          <div className="font-prompt font-medium mb-2">
+            <h2 className="font-bold text-xl mb-4">ประเภทผู้ขาย</h2>
+          </div>
+          <div className="flex items-center">
+            <div className="mr-6">
+              <input
+                type="radio"
+                id="individual"
+                name="sellerType"
+                value="individual"
+                checked={sellerType === "individual"}
+                onChange={() => setSellerType("individual")}
+                className="mr-2"
+              />
+              <label htmlFor="individual" className="font-prompt">
+                บุคคลธรรมดา
+              </label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                id="corporate"
+                name="sellerType"
+                value="corporate"
+                checked={sellerType === "corporate"}
+                onChange={() => setSellerType("corporate")}
+                className="mr-2"
+              />
+              <label htmlFor="corporate" className="font-prompt">
+                นิติบุคคล
+              </label>
+            </div>
+          </div>
+        </div>
+
         <div className="mb-4">
-          <InputForm values={values} setValues={setValues} />
+          <InputForm
+            values={values}
+            setValues={setValues}
+            sellerType={sellerType}
+          />
         </div>
 
         <div className="mb-4">
@@ -165,6 +248,7 @@ const CondoTaxCalculator: React.FC = () => {
             results={results}
             paymentShares={paymentShares}
             detailedPeriod={detailedPeriod}
+            sellerType={sellerType}
           />
         )}
       </div>
